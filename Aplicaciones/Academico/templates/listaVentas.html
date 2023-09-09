@@ -1,0 +1,91 @@
+{%extends "./base.html" %}
+{% load static %}
+{% block title %} Inicio {% endblock %}
+
+{% block body %}
+
+<head>
+    <title>Listar Ventas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            
+            color: #000000;
+            padding: 20px;
+            text-align: center;
+        }
+        form {
+            text-align: center;
+            margin: 20px 0;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #585a5d;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            background-color:#2e6772;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #2e6772;
+        }
+        th {
+            background-color: #2e6772;
+            color: #fff;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+    <form method="GET">
+        <h1>Historial de ventas <i>
+            <img src="{%static 'img/caja2.png'%}" alt="">
+        </i></h1>
+        <br>
+        <input type="text" name="q" placeholder="Buscar ventas por cliente o producto">
+        <input type="submit" value="Buscar">
+    </form>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Cliente</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Fecha</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for venta in ventas %}
+                <tr>
+                    <td>{{ venta.cliente }}</td>
+                    <td>{{ venta.producto }}</td>
+                    <td>{{ venta.cantidad }}</td>
+                    <td>{{ venta.fecha }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

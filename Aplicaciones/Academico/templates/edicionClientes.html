@@ -1,0 +1,36 @@
+{%extends "./base.html" %}
+
+{% block title %} Gestión de Proveedores {% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <h2>Edición de clientes</h2>
+        <div class="card">
+            <div class="card-body">
+                    <form method="post" action="{% url 'editar_cliente' cliente.dni %}">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" id="txtDNI" name="txtDNI" value="{{cliente.dni}}" class="form-control" placeholder="DNI"
+                            maxlength="10" readonly required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="txtNombre" name="txtNombre" value="{{cliente.nombre}}" class="form-control" placeholder="Nombre"
+                            maxlength="50" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="txtApellido" name="txtApellido" value="{{cliente.apellido}}" class="form-control"
+                            placeholder="Apellido" maxlength="50" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="txtTelefono" name="txtTelefono" value="{{cliente.telefono}}" class="form-control"
+                            placeholder="Telefono" maxlength="09" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

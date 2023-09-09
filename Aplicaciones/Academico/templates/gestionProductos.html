@@ -1,0 +1,184 @@
+{% extends "./base.html" %}
+{% load static %}
+{% block title %} Inventario{% endblock %}
+
+{% block body %}
+
+<head>
+    <style>
+        /* styles.css */
+        @import url('https://fonts.googleapis.com/css?family=Arimo');
+
+    /* Estilo para el formulario */
+        .card{
+            left: -130px;
+            border: transparent;
+            padding: -20px 5px;
+        }
+
+        .card-body{
+            width: 400px;
+            border: 2px solid #797f83;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px;
+            background-color: #c9e5ec;
+            
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 35px;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            font-family: "Arimo";
+            
+        }
+        /* Estilo de las letras*/
+        h2{
+            font-family: 'Lilita One', cursive;
+            position: relative;
+            right: 60px;
+            padding: 5px;
+        }
+        
+        /* Estilo para el botón "Guardar" */
+        .btn-success {
+            background-color: #114f61;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+        }
+        .btn-success:hover {
+            background-color: #3b6d7a; /* Cambia el color de fondo al pasar el mouse */
+        }
+        .table-responsive{
+            width: 900px;
+        }
+        
+        /* Estilo para la tabla de productos */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            padding: 20px;
+        }
+        
+        .table th {
+            padding: 10px;
+            background-color: #2e6772;
+            border: 1px solid #ddd;
+            color: white;
+            text-align: center;
+        }
+        
+        .table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        
+        /* Estilo para las filas de productos con cantidad baja */
+        table tr.low-stock {
+            background-color: rgb(199, 47, 47);
+            color: white;
+        }
+        
+        /* Estilo para los botones "Editar" y "Eliminar" */
+        td .btn-info, .btn-danger {
+            padding: 5px 5px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+    </style>
+</head>
+
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-dismissible alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong class="text-dark">{{ message }}</strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <h2>Gestión de Inventario</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="/registrar_producto/" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" id="txtCodigo" name="txtCodigo" class="form-control" placeholder="Codigo"
+                            maxlength="11" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" placeholder="Nombre" maxlength="50" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="txtCantidad" name="txtCantidad" class="form-control" placeholder="Cantidad" min="0" step="1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" id="txtDescripcion" name="txtDescripcion" class="form-control" placeholder="Descripcion"
+                            maxlength="50" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="txtPrecio" name="txtPrecio" class="form-control"
+                            placeholder="Precio" maxlength="10" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-block text-white">Guardar <i>
+                            <img src="{%static 'img/salvar.png'%}" alt="" width="40" height="40">
+                        </i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <h1>Listado de Productos <i>
+            <img src="{%static 'img/mm.png'%}" alt="">
+        </i></h1>
+        <br>
+        <div class="table-responsive py-2">
+            <table class="table table-stripped">
+                <thead>
+                    <tr>
+                        <th>Codigo</th>
+                        <th>Nombre</th>
+                        <th>Cantidad</th>
+                        <th>Descripcion</th>
+                        <th>Precio</th>
+                        <th colspan="2">Opciones</th>
+                    </tr>
+                </thead>
+            <tbody>
+                {% for c in productos %}
+                <tr {% if c.cantidad < 10 %}style="background-color: red; color: white;"{% endif %}>
+                    <td>{{c.codigo}}</td>
+                    <td>{{c.nombre}}</td>
+                    <td>{{c.cantidad}}</td>
+                    <td>{{c.descripcion}}</td>
+                    <td>{{c.precio}}</td>
+                    <td><a href="{% url 'editar_producto' c.codigo %}" class="btn btn-info">Editar <i> 
+                        <img src="{%static 'img/modificar.png'%}" alt="">
+                    </i></a>
+                        <a href="{% url 'eliminar_producto' c.codigo %}" class="btn btn-danger btnEliminacion">Eliminar <i>
+                            <img src="{%static 'img/Cnew.png'%}" alt="">
+                        </i></a>
+                    </td>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

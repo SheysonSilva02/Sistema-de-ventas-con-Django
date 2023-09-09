@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Gestión de Proveedores{% endblock %}
+
+{% block body %}
+
+<head>
+    <style>
+        /* styles.css */
+        @import url('https://fonts.googleapis.com/css?family=Arimo');
+
+    /* Estilo para el formulario */
+        .card{
+            left: -100px;
+            border: transparent;
+            padding: -20px 5px;
+        }
+
+        .card-body{
+            width: 400px;
+            border: 2px solid #797f83;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px;
+            background-color: #c9e5ec;
+            
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 35px;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            font-family: "Arimo";
+            
+        }
+        /* Estilo de las letras*/
+        h2{
+            width: 900px;;
+            font-family: 'Lilita One', cursive;
+            position: relative;
+            right: 100px;
+            margin: 10px 10px -20px;
+        }
+        
+        /* Estilo para el botón "Guardar" */
+        .btn-success {
+            background-color: #114f61;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+        }
+        .btn-success:hover {
+            background-color: #3b6d7a; /* Cambia el color de fondo al pasar el mouse */
+        }
+        
+        
+        /* Estilo para los botones "Editar" y "Eliminar" */
+        td .btn-info, .btn-danger {
+            padding: 5px 5px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+    </style>
+</head>
+
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <h2>Edición de Proveedores <i>
+            <img src="{%static 'img/employee.png'%}" alt="">
+        </i></h2>
+        <br>
+        <div class="card">
+            <div class="card-body">
+                <form method="post" action="{% url 'editar_proveedor' proveedor.ruc %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" id="txtruc" name="txtruc" value="{{ proveedor.ruc }}" class="form-control" placeholder="RUC" maxlength="10" readonly required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="txtNombre" name="txtNombre" value="{{ proveedor.nombre }}" class="form-control" placeholder="Nombre" maxlength="50" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="txtRubro" name="txtRubro" value="{{ proveedor.rubro }}" class="form-control" placeholder="rubro" maxlength="50" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="txtTelefono" name="txtTelefono" value="{{ proveedor.telefono }}" class="form-control" placeholder="Teléfono" maxlength="9" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-block text-white">Guardar <i>
+                            <img src="{%static 'img/salvar.png'%}" alt="" width="20" height="20">
+                        </i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

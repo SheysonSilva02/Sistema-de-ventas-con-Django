@@ -1,0 +1,22 @@
+{%extends "./base.html" %}
+
+{% block title %} Inicio {% endblock %}
+
+{% block body %}
+
+<head>
+    <title>Gráfico de Productos</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+</head>
+<body>
+    <div id="grafico"></div>
+
+    <script>
+        var graph_json = JSON.parse('{{ graph_json|escapejs }}');
+        Plotly.newPlot('grafico', graph_json.data, graph_json.layout);
+    </script>
+
+
+
+{% endblock %}

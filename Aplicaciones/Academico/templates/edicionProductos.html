@@ -1,0 +1,107 @@
+{%extends "./base.html" %}
+{% load static %}
+{% block title %} Gestión de Proveedores {% endblock %}
+
+{% block body %}
+
+<head>
+    <style>
+        /* styles.css */
+        @import url('https://fonts.googleapis.com/css?family=Arimo');
+
+    /* Estilo para el formulario */
+        .card{
+            left: -100px;
+            border: transparent;
+            padding: -10px 5px;
+        }
+
+        .card-body{
+            width: 400px;
+            border: 2px solid #797f83;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px;
+            background-color: #c9e5ec;
+            
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 35px;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            font-family: "Arimo";
+            
+        }
+        /* Estilo de las letras*/
+        h2{
+            width: 900px;;
+            font-family: 'Lilita One', cursive;
+            position: relative;
+            right: 100px;
+            margin: 10px 10px -20px;
+        }
+        
+        /* Estilo para el botón "Guardar" */
+        .btn-success {
+            background-color: #114f61;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+        }
+        .btn-success:hover {
+            background-color: #3b6d7a; /* Cambia el color de fondo al pasar el mouse */
+        }
+        
+        
+        /* Estilo para los botones "Editar" y "Eliminar" */
+        .btn-success {
+            padding: 5px 5px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+    </style>
+</head>
+
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <h2>Edición de Productos <i>
+            <img src="{%static 'img/m1.png'%}" alt="">
+        </i></h2>
+        <br>
+        <div class="card">
+            <div class="card-body">
+                <form method="post" action="{% url 'editar_producto' producto.codigo %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" id="txtCodigo" name="txtCodigo" value="{{ producto.codigo }}" class="form-control" placeholder="Codigo" maxlength="10" readonly required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="txtNombre" name="txtNombre" value="{{ producto.nombre }}" class="form-control" placeholder="Nombre" maxlength="50" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="txtCantidad" name="txtCantidad" value="{{ producto.cantidad }}" class="form-control" placeholder="Cantidad" maxlength="50" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="txtDescripcion" name="txtDescripcion" value="{{ producto.descripcion }}" class="form-control" placeholder="Descripcion" maxlength="50" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="float" id="txtPrecio" name="txtPrecio" value="{{ producto.precio }}" class="form-control" placeholder="Precio" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-block text-white">GUARDAR <i>
+                            <img src="{%static 'img/salvar.png'%}" alt="" width="40" height="40">
+                        </i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

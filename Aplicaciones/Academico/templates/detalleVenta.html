@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Historial de Ventas{% endblock %}
+
+{% block body %}
+
+<head>
+    <style>
+        /* styles.css */
+        @import url('https://fonts.googleapis.com/css?family=Arimo');
+
+    /* Estilo para el formulario */
+        /* Estilos para la tarjeta */
+        .card {
+            background-color: #d1eef9; /* Color de fondo */
+            border: 1px solid #ccc; /* Borde */
+            border-radius: 10px; /* Bordes redondeados */
+            padding: 20px; /* Espaciado interno */
+            margin: 20px auto; /* Margen exterior */
+            max-width: 400px; /* Ancho máximo */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+        }
+
+        /* Estilos para el encabezado */
+        .card h1 {
+            text-align: center; /* Alineación del texto en el centro */
+            color: #333; /* Color del texto */
+        }
+        
+        /* Estilos para el párrafo de fecha y hora */
+        .card p.text-center {
+            text-align: center; /* Alineación del texto en el centro */
+            color: #666; /* Color del texto */
+        }
+        
+        /* Estilos para la lista de detalles */
+        .card ul {
+            list-style: none; /* Eliminar viñetas */
+            padding-left: 0; /* Eliminar espacio en el margen izquierdo */
+        }
+        
+        /* Estilos para los elementos de la lista */
+        .card li {
+            margin-bottom: 10px; /* Espaciado entre elementos de la lista */
+            color: #444; /* Color del texto */
+        }
+        
+        /* Estilos para los botones */
+        .card .text-center a.btn {
+            display: inline-block; /* Hacer que los botones se muestren en línea */
+            margin-right: 10px; /* Margen derecho entre botones */
+            color:  rgb(248, 249, 249);
+            background-color: rgb(16, 55, 55);
+        }
+
+        .text-center .btn-secondary {
+            display: inline-block; /* Hacer que los botones se muestren en línea */
+            margin-right: 10px; /* Margen derecho entre botones */
+            color:  rgb(248, 249, 249);
+            background-color: rgb(16, 55, 55);
+        }
+
+        .text-center img{
+            text-align: center;
+            right:  50px;
+        }
+
+    </style>
+</head>
+
+<div class="card p-4">
+    <h1 class="text-center">Boleta de Venta <i>
+        <img src="{%static 'img/log2.png'%}" alt="" width="210" height="80" rigth="50">
+    </i></h1>
+    
+    <br>
+    <p class="text-center">Fecha y Hora: <span id="fecha-hora"></span></p>
+    <div class="row">
+        <div class="col">
+            <ul class="list-unstyled">
+                <li><strong>Cliente:</strong> {{ venta.cliente }}</li>
+                <li><strong>Producto:</strong> {{ venta.producto }}</li>
+                <li><strong>Cantidad:</strong> {{ venta.cantidad }}</li>
+            </ul>
+        </div>
+    </div>
+    <div class="text-center">
+        <a href="{% url 'realizar_venta' %}" class="btn btn-primary">Otra venta <i>
+            <img src="{%static 'img/Producto.png'%}" alt="">
+        </i></a>
+        <form action="{% url 'grafica_barras' %}" method="get" class="d-inline">
+            <button type="submit" class="btn btn-secondary">Regresar <i>
+                <img src="{%static 'img/salir (2).png'%}" alt="" >
+            </i></button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function mostrarFechaHora() {
+        const fechaHoraElemento = document.getElementById('fecha-hora');
+        const fechaHoraActual = new Date();
+        const options = {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            timeZoneName: 'short'
+        };
+        const fechaHoraFormateada = fechaHoraActual.toLocaleDateString('es-ES', options);
+        fechaHoraElemento.textContent = fechaHoraFormateada;
+    }
+    mostrarFechaHora();
+</script>
+{% endblock %}
+

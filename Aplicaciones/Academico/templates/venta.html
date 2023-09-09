@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Historial de Ventas{% endblock %}
+
+{% block body %}
+
+<head>
+    <title>Listar Ventas</title>
+    <style>
+        /* Estilos para el formulario */
+        .card {
+        max-width: 600px; /* Ancho máximo de la tarjeta */
+        margin: 0 auto; /* Centrar la tarjeta horizontalmente */
+        padding: 0px ;
+        }
+
+        .card-header {
+            padding: -5px;
+            background-color:#2e6772; /* Color de fondo del encabezado */
+            color: #fff; /* Color del texto del encabezado */
+            text-align: center; /* Alineación del texto en el centro */
+        }
+        
+        .card-body {
+            padding: 20px; /* Espaciado interno del cuerpo de la tarjeta */
+        }
+        
+        .alert-danger {
+            background-color: #f8d7da; /* Color de fondo de la alerta de error */
+            color: #721c24; /* Color del texto de la alerta de error */
+            border-color: #f5c6cb; /* Color del borde de la alerta de error */
+            padding: 10px; /* Espaciado interno de la alerta de error */
+            margin-bottom: 20px; /* Margen inferior de la alerta de error */
+        }
+        
+        .form-group {
+            margin-bottom: 20px; /* Margen inferior entre grupos de formulario */
+            color: #2e6772;
+        }
+        
+        .btn-success {
+            background-color: rgb(16, 55, 55); /* Color de fondo del botón de éxito */
+            color: #fff; /* Color del texto del botón de éxito */
+        }
+        
+        .btn-primary {
+            background-color: rgb(16, 55, 55); /* Color de fondo del botón primario */
+            color: #fff; /* Color del texto del botón primario */
+        }
+        
+        
+        .btn-success:hover , .btn-primary:hover {
+            background-color: #3b6d7a; /* Cambia el color de fondo al pasar el mouse */
+        }
+        .btn-success,
+        .btn-primary {
+            margin-right: 10px; /* Margen derecho entre botones */
+        }
+        
+        /* Estilos para los campos de formulario */
+        .form-control {
+            border-radius: 10px; /* Bordes redondeados de los campos de formulario */
+        }
+        
+        /* Estilos para las etiquetas de los campos de formulario */
+        label {
+            font-weight: bold; /* Texto de etiqueta en negrita */
+        }
+        
+        /* Estilos para el espacio entre el botón y el formulario */
+        .text-center {
+            margin-top: 20px; /* Margen superior entre el botón y el formulario */
+        }
+        
+
+
+    </style>
+</head>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h1>Realizar Venta <i>
+                            <img src="{%static 'img/log.png'%}" alt="" width="250" height="90">
+                        </i></h1>
+                    </div>
+                    <div class="card-body">
+                        {% if error_msg %}
+                            <div class="alert alert-danger">{{ error_msg }}</div>
+                        {% endif %}
+
+                        <form method="post">
+                            {% csrf_token %}
+                            
+                            <div class="form-group">
+                                {{ form.cliente.label_tag }}
+                                {{ form.cliente }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.producto.label_tag }}
+                                {{ form.producto }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.cantidad.label_tag }}
+                                {{ form.cantidad }}
+                            </div>
+
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn btn-success">Realizar Venta <i>
+                                    <img src="{%static 'img/Caja.png'%}" alt="">
+                                </i></button>
+                                <a href="{% url 'grafica_barras' %}" class="btn btn-primary">Regresar <i>
+                                    <img src="{%static 'img/salir (2).png'%}" alt="" >
+                                </i></a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
